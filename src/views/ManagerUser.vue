@@ -236,8 +236,8 @@ const resetForm = () => {
   formData.gender = "Male";
   formData.dateOfBirth = "";
   formData.email = "";
+  formErrors.value = []; // Reset errors on form reset
 };
-
 // Format date
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
