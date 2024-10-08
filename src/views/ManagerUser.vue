@@ -49,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Modal for Add/Edit User -->
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
         <h3>{{ isEdit ? "Edit User" : "Add New User" }}</h3>
@@ -91,7 +90,6 @@
       </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
     <div v-if="showDeleteModal" class="modal-overlay">
       <div class="modal">
         <h3>Xác nhận</h3>
@@ -110,7 +108,6 @@ import Header from "../components/Header.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { ref, reactive, onMounted, computed } from "vue";
 
-// State variables
 const users = ref([]);
 const showModal = ref(false);
 const showDeleteModal = ref(false);
@@ -120,7 +117,6 @@ const searchQuery = ref("");
 const formErrors = ref([]);
 const errorMessage = ref("");
 
-// Form data structure
 const formData = reactive({
   name: "",
   gender: "Male",
@@ -128,13 +124,11 @@ const formData = reactive({
   email: "",
 });
 
-// Load users from localStorage
 onMounted(() => {
   const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
   users.value = storedUsers;
 });
 
-// Search filter
 const filteredUsers = computed(() => {
   if (searchQuery.value === "") {
     return users.value;
@@ -146,7 +140,6 @@ const filteredUsers = computed(() => {
   );
 });
 
-// Open Add User Modal
 const openAddModal = () => {
   resetForm();
   showModal.value = true;
@@ -154,7 +147,6 @@ const openAddModal = () => {
   errorMessage.value = "";
 };
 
-// Open Edit User Modal
 const openEditModal = (index) => {
   const user = users.value[index];
   formData.name = user.name;
@@ -167,14 +159,12 @@ const openEditModal = (index) => {
   errorMessage.value = "";
 };
 
-// Close Modal
 const closeModal = () => {
   showModal.value = false;
   resetForm();
   errorMessage.value = "";
 };
 
-// Validate form data
 const validateForm = () => {
   formErrors.value = [];
   const today = new Date();
@@ -197,7 +187,6 @@ const validateForm = () => {
   return formErrors.value.length === 0;
 };
 
-// Submit form data
 const submitForm = () => {
   if (validateForm()) {
     if (isEdit.value) {
@@ -210,35 +199,30 @@ const submitForm = () => {
   }
 };
 
-// Confirm delete user
 const confirmDeleteUser = (index) => {
   currentUserIndex.value = index;
   showDeleteModal.value = true;
 };
 
-// Delete user
 const deleteUser = () => {
   users.value.splice(currentUserIndex.value, 1);
   localStorage.setItem("users", JSON.stringify(users.value));
   closeDeleteModal();
 };
 
-// Close delete modal
 const closeDeleteModal = () => {
   showDeleteModal.value = false;
   currentUserIndex.value = null;
   resetForm();
 };
 
-// Reset form data
 const resetForm = () => {
   formData.name = "";
   formData.gender = "Male";
   formData.dateOfBirth = "";
   formData.email = "";
-  formErrors.value = []; // Reset errors on form reset
+  formErrors.value = [];
 };
-// Format date
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
   return new Date(dateString).toLocaleDateString(undefined, options);

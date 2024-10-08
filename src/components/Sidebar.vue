@@ -24,18 +24,16 @@
 </template>
   
   <script>
-import { useRoute, useRouter } from "vue-router"; // Import Vue Router hooks
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   name: "Navbar",
   setup() {
-    const route = useRoute(); // Lấy thông tin route hiện tại
-    const router = useRouter(); // Dùng để điều hướng trang
+    const route = useRoute();
+    const router = useRouter();
 
-    // Kiểm tra đường dẫn hiện tại
     const isActiveRoute = (path) => route.path === path;
 
-    // Hàm điều hướng
     const navigate = (path) => {
       router.push(path);
     };
